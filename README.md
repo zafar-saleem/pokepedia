@@ -65,7 +65,7 @@ query { pokemons(query: { limit: 10, offset: 0 }) { edges { name } } }
 ```
  
 
-### B. **React bootstrap**
+### B. **Bootstrapping you client app**
 
 Feel free, to bootstrap your app as you want. We recomend [Create React App](https://reactjs.org/docs/create-a-new-react-app.html#create-react-app). You are free to use whatever stack you want but what we value the most is [React](https://reactjs.org/)
 
