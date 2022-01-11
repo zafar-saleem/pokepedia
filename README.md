@@ -79,10 +79,10 @@ Fork this repository and create your own exercise, after that launch the setup!
 IMPORTANT: If you want to commit and push your work as you go, you'll want to fork first and then clone your fork rather than this repo directly.
 ```
 
-After you've made sure to have the correct things (and versions) installed, you should be able to just run a few commands to get set up:
+When you are ready to start, pleasy put you code in [/pokedex-client](pokedex-client).
 
-```
-$ git clone https://github.com/technoactivity/pokedex-server.git 
-$ cd pokedex-client
-$ node setup
-```
+Enjoy!!
+
+## 06. Extra point
+
+-  [Thinking in React](https://reactjs.org/docs/thinking-in-react.html)
