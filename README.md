@@ -26,7 +26,7 @@ Your mission is to build a small Pokedex app that show to next mock web applicat
 ![list](example-pokedex-client/example-list-view.png)
 ![detail](example-pokedex-client/example-detail-view.png)
 
-** NOTE: App mockups and a video example can be found in the [example-pokedex-client](example-pokedex-client/example-detail-view.png) folder in the root of the directory as example.mov
+** NOTE: App mockups and a video example can be found in the [example-pokedex-client](example-pokedex-client) folder in the root of the directory as example.mov
 
 ## 03. Some expect features
 
