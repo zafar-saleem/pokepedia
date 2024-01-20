@@ -162,10 +162,12 @@ yarn lint
 ```
 ## Here is how it looks like.
 
-![Live](./images/1.png)
+![Live](./screenshots/1.png)
 
-![Live](./images/2.png)
+![Live](./screenshots/2.png)
 
-![Live](./images/3.png)
+![Live](./screenshots/3.png)
 
-![Live](./images/4.png)
+![Live](./screenshots/4.png)
+
+![Live](./screenshots/5.png)
