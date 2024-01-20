@@ -1,0 +1,30 @@
+export const palette = {
+  branding: {
+    color100: "#fefefe",
+    color200: "#d7f0e7",
+    color300: "#afdecc",
+    color400: "#87c7ae",
+    color500: "#74c0a2",
+    color600: "#4a9c7b",
+    color700: "#2b8160",
+    color800: "#176e4c",
+    color900: "#003520",
+  },
+  supporting: {
+    color100: "#f8b0ad",
+    color200: "#f26560",
+    color300: "#df4943",
+    color400: "#be4945",
+    color500: "#bb3530",
+    color600: "#9e2520",
+    color700: "#7a1510",
+    color800: "#590a06",
+    color900: "#390502",
+  },
+  neutral: {
+    color100: "#db3651",
+    color200: "#3936db",
+    color300: "#36db4a",
+    color400: "#db9d36",
+  },
+};
