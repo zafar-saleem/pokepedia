@@ -13,7 +13,6 @@ function App() {
           <Route path={`favorites`} element={<Favorites />} />
         </Route>
         <Route path={`/detail/:slug`} element={<PokemonDetail />} />
-        {/* <Route path="*" element={<NoPage />} /> */}
       </Routes>
     </BrowserRouter>
   )
