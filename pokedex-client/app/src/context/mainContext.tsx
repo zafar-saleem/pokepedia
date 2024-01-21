@@ -1,31 +1,16 @@
 import React from 'react';
 import { useQuery, gql, useMutation } from '@apollo/client';
+import { debounce } from "lodash";
 
 const GET_POKEMONS = gql`
-  query { pokemons(query: { limit: 5, offset: 0 }) { 
-    edges {
+  query { 
+    pokemons(query: { limit: 50, offset: 0 }) { 
+      edges {
         name,
         image,
         id,
-        classification,
-        maxCP,
-        maxHP,
-        fleeRate,
         resistant,
-        weaknesses,
         isFavorite,
-        attacks {
-          fast {
-            name, 
-            damage, 
-            type 
-          },
-          special {
-            name, 
-            damage, 
-            type 
-          }
-        }
       }
     }
   }
@@ -61,6 +46,23 @@ const MainProvider = ({ children }: React.PropsWithChildren) => {
   const [allView, updateAllView] = React.useState("grid");
   const [favorite] = useMutation(FAVORITE);
   const [unFavorite] = useMutation(UN_FAVORITE);
+  const [filteredContents, updateFilteredContent] = React.useState({});
+  const [favorites, updateFavorites] = React.useState<any>([]);
+  const [filteredFavorites, updateFilteredFavorites] = React.useState<any>();
+  let filtered: any = { pokemons: { edges: [] }};
+  // const { pathname } = useLocation();
+
+  React.useEffect(() => {
+    // @ts-ignore
+    if (data && "pokemons" in data) {
+      filtered.pokemons.edges = data.pokemons.edges.filter((item: any) => item.isFavorite && item);
+      updateFavorites(filtered);
+    }
+  }, [data]);
+
+  React.useEffect(() => {
+    updateFilteredContent(data);
+  }, [data]);
 
   const makeFavorite = React.useCallback((id: string) => {
     favorite({ variables: { id: id } });
@@ -71,6 +73,27 @@ const MainProvider = ({ children }: React.PropsWithChildren) => {
     unFavorite({ variables: { id: id } });
     refetch();
   }, [data]);
+ 
+  const filterPokemonsByName = debounce((event: any) => {
+    let filtered = { pokemons: { edges: []}}
+    if (window.location.pathname === "/favorites") {
+      // @ts-ignore
+      filtered.pokemons.edges = favorites?.pokemons?.edges?.filter((item) => {
+        if (item.name.toLowerCase().includes(event.target.value.toLowerCase())) {
+          return item;
+        }
+      });  
+      return updateFilteredFavorites(filtered);
+    }
+    // @ts-ignore
+    filtered.pokemons.edges = data?.pokemons?.edges?.filter((item) => {
+      if (item.name.toLowerCase().includes(event.target.value.toLowerCase())) {
+        return item;
+      }
+    });
+
+    return updateFilteredContent(filtered);
+  }, 300);
 
   return (
     <MainContext.Provider
@@ -79,9 +102,13 @@ const MainProvider = ({ children }: React.PropsWithChildren) => {
         loading,
         error,
         allView,
+        filteredContents,
         updateAllView,
         makeFavorite,
         makeUnFavorite,
+        filterPokemonsByName,
+        favorites,
+        filteredFavorites,
       }}
     >
       {children}

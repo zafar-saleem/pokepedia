@@ -12,25 +12,10 @@ const GET_POKEMON = gql`
       name,
       image,
       id,
-      classification,
       maxCP,
       maxHP,
-      fleeRate,
       resistant,
-      weaknesses,
       isFavorite,
-      attacks {
-        fast {
-          name,
-          damage,
-          type
-        },
-        special {
-          name,
-          damage,
-          type
-        }
-      }
     }
   }
 `;

@@ -40,4 +40,7 @@ export const Button = styled(Link)`
       display: inline-block;
     }
   }
+  &:hover {
+    background-color: #f3f3f3;
+  }
 `;

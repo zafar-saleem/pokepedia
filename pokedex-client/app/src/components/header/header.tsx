@@ -23,9 +23,11 @@ const Header = () => {
         <React.Suspense fallback={<p>Loading types...</p>}>
           <Types />
         </React.Suspense>
+        {/* @ts-ignore */}
         <Styles.Button className="list" onClick={() => updateAllView("list")}>
           <img src={List} alt="List" />
         </Styles.Button>
+        {/* @ts-ignore */}
         <Styles.Button className="grid" onClick={() => updateAllView("grid")}>
           <img src={Grid} alt="Grid" />
         </Styles.Button>

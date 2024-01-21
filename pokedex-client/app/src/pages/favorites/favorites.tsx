@@ -11,43 +11,15 @@ const GET_POKEMONS = gql`
         name,
         image,
         id,
-        classification,
-        maxCP,
-        maxHP,
-        fleeRate,
         resistant,
-        weaknesses,
         isFavorite,
-        attacks {
-          fast {
-            name, 
-            damage, 
-            type 
-          },
-          special {
-            name, 
-            damage, 
-            type 
-          }
-        }
       }
     }
   }
 `;
 
 export const Favorites = () => {
-  const [favorites, updateFavorites] = React.useState<any>([]);
-  // const { data, allview }: any = useMain();
-  const { data, allView }: any = useMain();
-  let filtered: any = { pokemons: { edges: [] }};
-
-  React.useEffect(() => {
-    // @ts-ignore
-    if (data && "pokemons" in data) {
-      filtered.pokemons.edges = data.pokemons.edges.filter((item: any) => item.isFavorite && item);
-      updateFavorites(filtered);
-    }
-  }, [data]);
+  const { allView, favorites, filteredFavorites }: any = useMain();
 
   if (favorites.length <= 0) {
     return <>No favorites</>
@@ -55,7 +27,7 @@ export const Favorites = () => {
 
   return (
     <>
-      {RenderAllView[allView](favorites)}
+      {RenderAllView[allView](filteredFavorites || favorites)}
     </>
   )
 }
