@@ -2,6 +2,22 @@ import React from 'react';
 import { useQuery, gql, useMutation } from '@apollo/client';
 import { debounce } from "lodash";
 
+export interface IEdges {
+  id: string;
+  image: string;
+  isFavorite: boolean;
+  name: string;
+  resistant: string[];
+}
+
+interface IPokemons {
+  edges: IEdges[];
+}
+
+export interface IContents {
+  pokemons: IPokemons;
+}
+
 const GET_POKEMONS = gql`
   query { 
     pokemons(query: { limit: 50, offset: 0 }) { 
@@ -40,17 +56,17 @@ export const MainContext = React.createContext({ });
 // export useMain to use as Context.
 export const useMain = () => React.useContext(MainContext);
 
+let filtered: IContents = { pokemons: { edges: [] }};
+
 // Main provider.
 const MainProvider = ({ children }: React.PropsWithChildren) => {
   const { loading, error, data, refetch } = useQuery(GET_POKEMONS);
-  const [allView, updateAllView] = React.useState("grid");
   const [favorite] = useMutation(FAVORITE);
   const [unFavorite] = useMutation(UN_FAVORITE);
-  const [filteredContents, updateFilteredContent] = React.useState({});
-  const [favorites, updateFavorites] = React.useState<any>([]);
-  const [filteredFavorites, updateFilteredFavorites] = React.useState<any>();
-  let filtered: any = { pokemons: { edges: [] }};
-  // const { pathname } = useLocation();
+  const [allView, updateAllView] = React.useState<string>("grid");
+  const [filteredContents, updateFilteredContent] = React.useState<IContents>();
+  const [favorites, updateFavorites] = React.useState<IContents | IContents[]>([]);
+  const [filteredFavorites, updateFilteredFavorites] = React.useState<IContents>();
 
   React.useEffect(() => {
     // @ts-ignore
@@ -74,8 +90,9 @@ const MainProvider = ({ children }: React.PropsWithChildren) => {
     refetch();
   }, [data]);
  
-  const filterPokemonsByName = debounce((event: any) => {
+  const filterPokemonsByName = debounce((event: React.ChangeEvent<HTMLInputElement>) => {
     let filtered = { pokemons: { edges: []}}
+    
     if (window.location.pathname === "/favorites") {
       // @ts-ignore
       filtered.pokemons.edges = favorites?.pokemons?.edges?.filter((item) => {
