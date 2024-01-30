@@ -7,8 +7,6 @@ export const PokemonItems = () => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error : {error.message}</p>;
 
-  const pokemons = data.pokemons.edges;
-
   return (
     <>
       {RenderAllView[allView]({ ...data })}
