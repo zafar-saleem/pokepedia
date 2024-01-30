@@ -31,3 +31,7 @@ export const Info = styled.div`
     cursor: pointer;
   }
 `;
+
+export const Container = styled.div`
+  border: 1px solid #cccccc;
+`;

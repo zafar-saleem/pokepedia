@@ -14,7 +14,7 @@ export const GridItem = ({ ...props }) => {
       {
         // @ts-ignore
         props && props?.pokemons?.edges?.map((pokemon, index) => (
-          <div key={index}>
+          <Styles.Container key={index}>
             <Link to={`/detail/${pokemon.name}`} key={index}>
               <Styles.Media src={pokemon.image} alt={pokemon.name} />
             </Link>
@@ -35,7 +35,7 @@ export const GridItem = ({ ...props }) => {
                 }} />
               }<br />
             </Styles.Info>
-          </div>
+          </Styles.Container>
         ))
       }
     </Styles.Grid>
