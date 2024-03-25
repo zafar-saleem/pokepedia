@@ -1,88 +1,173 @@
-# Coding Challenge: pokedex client side 
+**Disclaimer**
 
-This repository contains a coding exercise for new developers joining the frontend development team. This version is focused in React.
+The details page is not as identical to the designs because server does not return some of the data to the front end which needs to rendered on details page therefore, I only add information which the server returns.
 
-## 01. System Requirements
+Secondly, since the design is only for small devices therefore, I assumed that it is only for ipad/tablet screens and I only tested it on these screens. It might not completely look good on larger or mobile screens. And there were no requirements whether to implement responsive design.
 
+# Folder structure
 
-- [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) v2.13 or greater
-
-- You’ll need to have [Node](https://nodejs.org/de/download/) >= 14.0.0 and npm >= 5.6 on your machine.
-
-
-** All of these must be available in your PATH. To verify things are set up properly, you can run this:
+Below is the entire folder structure.
 
 ```
-git --version
-node --version
-npm --version
+.
+├── README.md
+├── index.html
+├── package.json
+├── public
+│   └── vite.svg
+├── src
+│   ├── App.css
+│   ├── App.tsx
+│   ├── assets
+│   │   └── react.svg
+│   ├── components
+│   │   ├── all-views
+│   │   │   ├── grid
+│   │   │   │   ├── grid.styles.tsx
+│   │   │   │   ├── grid.tsx
+│   │   │   │   └── index.tsx
+│   │   │   └── list
+│   │   │       ├── index.tsx
+│   │   │       ├── list.styles.tsx
+│   │   │       └── list.tsx
+│   │   ├── header
+│   │   │   ├── assets
+│   │   │   │   ├── grid.webp
+│   │   │   │   └── list.webp
+│   │   │   ├── header.styles.tsx
+│   │   │   ├── header.tsx
+│   │   │   └── index.tsx
+│   │   ├── layout
+│   │   │   ├── index.tsx
+│   │   │   ├── layout.styles.tsx
+│   │   │   └── layout.tsx
+│   │   ├── navigation
+│   │   │   ├── index.tsx
+│   │   │   ├── navigation.styles.tsx
+│   │   │   └── navigation.tsx
+│   │   ├── search
+│   │   │   ├── index.tsx
+│   │   │   ├── search.styles.tsx
+│   │   │   └── search.tsx
+│   │   └── types
+│   │       ├── index.tsx
+│   │       ├── types.styles.tsx
+│   │       └── types.tsx
+│   ├── context
+│   │   └── mainContext.tsx
+│   ├── index.css
+│   ├── interfaces.tsx
+│   ├── main.tsx
+│   ├── pages
+│   │   ├── favorites
+│   │   │   ├── favorites.tsx
+│   │   │   └── index.tsx
+│   │   ├── pokemon-detail
+│   │   │   ├── detail.styles.tsx
+│   │   │   ├── detail.tsx
+│   │   │   └── index.tsx
+│   │   └── pokemon-items
+│   │       ├── index.tsx
+│   │       └── pokemon-items.tsx
+│   ├── routes.tsx
+│   ├── theme
+│   │   ├── globals.ts
+│   │   ├── index.ts
+│   │   ├── screens
+│   │   │   ├── breakpoints.ts
+│   │   │   └── index.ts
+│   │   ├── theme.ts
+│   │   ├── tokens
+│   │   │   ├── colors.ts
+│   │   │   ├── gutter.ts
+│   │   │   ├── index.ts
+│   │   │   ├── palette.ts
+│   │   │   └── sizes.ts
+│   │   └── typography
+│   │       ├── index.ts
+│   │       └── typography.ts
+│   ├── utils
+│   │   └── render-view.tsx
+│   └── vite-env.d.ts
+├── tsconfig.json
+├── tsconfig.node.json
+├── vite.config.ts
+└── yarn.lock
 ```
 
-## 02. What we want you to build
+## Introduction
 
+I used `vite` to create this project as according to official `react documentation` `CRA` seems to be not the way to go with anymore. So I had few options such as setting up the entire project myself from scratch or make use of tool such as `vite`. I decided `vite` because it provides better developer experience due to lightning fast `dev` environment and `build` process etc. Secondly, it is already used in several production level projects by many startups therefore, it is way more reliable.
 
-Your mission is to build a small Pokedex app that show to next mock web application:
+`App.tsx` file mainly serves as `routes` file and I am initialising `Apollo Client` in `main.tsx` so that I have access to all of `Apollo Client` hooks in child pages and components. I decided to use `Apollo Client` as a API manager layer due to its advance caching mechanism which is perfect for better performance and better UX.
 
-![list](example-pokedex-client/example-list-view.png)
-![detail](example-pokedex-client/example-detail-view.png)
+For routing, I made use of `react-router-dom` as it is a standard library for routing and one of the requirement of this task was that users should be able to open `detail page` using url and `react-router-dom` serves that purpose very well.
 
-** NOTE: App mockups and a video example can be found in the [example-pokedex-client](example-pokedex-client) folder in the root of the directory as example.mov
+Moreover, I used `Styled-Components` for styling which allows to write `CSS-in-JS`. In addition, writing theme based CSS using `Styled-components` is way more approachable than vanilla CSS.
 
-## 03. Some expect features
+I also used code splitting concept by using `React Suspense` and lazy loading features. Code splitting allows to download components on demand rather than downloading the entire app from on first request.
 
+There are 3 main folders that needs to be taken into consideration during evaluation which are following.
 
-These are some of the features you should expect in you repositorie: 
+1. components
+2. pages
+3. styles
+4. Context API
 
-- Retrieve All Pokemons.
-- Show Pokemon details.
-- Search for Pokemon by text (Mainly "Pokemon Name").
-- Filter Pokemon by type.
-- Add and remove a Pokemon to and from your Favorites.
-- Retrieve All Favorite Pokemons.
+### components
 
+Components folder has global components that are used in all over the project. Some of the components I implemented are `grid` and `list` views, `header`, `layout`, `navigation`, `search` & `types`.
 
-## 04. What we provide to do the Coding Challenge
+### pages
 
+This folder contains all(`favorites`, `pokemon-items` & `pokemon-details`) pages.
 
-### A. **GraphQL Server**
+### styles
 
-We have provided you with a simple GraphQL server that serves Pokemon data. WARNING: The server is non-persistent and therefore on server restart, data will reset.
+Theme contains all of the global styles and variables such as `branding`, `typography`, `gutters` i.e. `spacing` & `gaps` etc. I decided this approach to make it developer friendly & leave less amount of technical debt for future.
 
-**To run the server:**
+### Context
 
-```
-$ cd graphql-pokemon-server
-$ npm install
-$ npm start
-```
+I decided to use context API for global state management. And all of the logic, retrieving data from server, `favorite` & `unFavorite`, searching features logic is implemented inside global context.
 
-After running the backend, you can access https://localhost:4000/graphql in the browser, you'll be presented with a GraphQL Playground that allows you to run Queries and Mutations as well. So you are going to see the GraphQL Schema.
+## Some more decisions
 
-A sample query:
+I decided to use TypeScript to make this project typesafe which allows to avoid common errors & bugs.
 
-```
-query { pokemons(query: { limit: 10, offset: 0 }) { edges { name } } }
-```
- 
+## How to run
 
-### B. **Bootstrapping you client app**
+To install dependencies use below commands.
 
-Feel free, to bootstrap your app as you want. We recomend [Create React App](https://reactjs.org/docs/create-a-new-react-app.html#create-react-app). You are free to use whatever stack you want but what we value the most is [React](https://reactjs.org/)
-
-Use only what you are comfortable with and feel free to use any additional libraries you deem necessary to complete the exercise. We would like to see your model designer skills so make sure you show them to us! (You can use any NPM dependency).
-
-## 05. Coding the solucion
-
-Fork this repository and create your own exercise, after that launch the setup!
-
-```
-IMPORTANT: If you want to commit and push your work as you go, you'll want to fork first and then clone your fork rather than this repo directly.
+```bash
+cd pokedex-client/app
+yarn
 ```
 
-When you are ready to start, pleasy put you code in [/pokedex-client](pokedex-client).
+To run locally.
 
-Enjoy!!
+```bash
+cd pokedex-client/app
+yarn dev
+```
 
-## 06. Extra point
+## Technolgical Stack
 
--  [Thinking in React](https://reactjs.org/docs/thinking-in-react.html)
+1. TypeScript
+2. React
+3. Vite
+4. Git
+5. Styled-Components
+4. Context API
+5. Lodash
+
+## Here is how it looks like.
+
+![Live](./screenshots/1.png)
+
+![Live](./screenshots/2.png)
+
+![Live](./screenshots/3.png)
+
+![Live](./screenshots/4.png)
+
+![Live](./screenshots/5.png)
